@@ -1,0 +1,17 @@
+function get_tutor_course_duration_shortcode() {
+    // বর্তমান লুপের কোর্স আইডি
+    $course_id = get_the_ID();
+    
+    // আগের সেই ফাংশনটি যা কাজ করছিল
+    $raw_duration = get_tutor_course_duration_context($course_id);
+    
+    // strip_tags ফাংশন সব HTML ট্যাগ রিমুভ করে দেবে, শুধু টেক্সট থাকবে
+    $clean_duration = strip_tags($raw_duration);
+    
+    if (!empty($clean_duration)) {
+        return esc_html($clean_duration);
+    }
+    
+    return '';
+}
+add_shortcode('course_duration', 'get_tutor_course_duration_shortcode');

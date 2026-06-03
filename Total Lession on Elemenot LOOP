@@ -1,0 +1,21 @@
+add_shortcode( 'total_course_lessons', 'tutor_lms_total_lessons_shortcode' );
+
+function tutor_lms_total_lessons_shortcode() {
+    // Elementor loop থেকে current course ID নিবে
+    $course_id = get_the_ID();
+    
+    // Post type 'courses' না হলে কিছু রিটার্ন করবে না
+    if ( get_post_type( $course_id ) !== 'courses' ) {
+        return '';
+    }
+
+    // Tutor LMS-এর বিল্ট-ইন ইউটিলিটি ফাংশন দিয়ে lesson count বের করা
+    if ( function_exists( 'tutor_utils' ) ) {
+        $lesson_count = tutor_utils()->get_lesson_count_by_course( $course_id );
+        
+        // কাউন্ট রিটার্ন করবে (Lesson না থাকলে 0 দেখাবে)
+        return ( $lesson_count > 0 ) ? $lesson_count : '0';
+    }
+
+    return '';
+}
